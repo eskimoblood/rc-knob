@@ -47,7 +47,7 @@ const findClosest = (values, value) => {
     return result
 }
 
-const reducer = (state, action) => {
+const reducer = onChange => (state, action) => {
     switch (action.type) {
         case 'START':
             return {
@@ -60,13 +60,21 @@ const reducer = (state, action) => {
                 ...state,
                 ...action,
             })
+            let value = getValueFromPercentage({ ...state, percentage })
+
+            onChange(value)
             return {
                 ...state,
                 percentage,
-                value: getValueFromPercentage({ ...state, percentage }),
+                value,
             }
         case 'INCREASE':
-            const value = clamp(state.min, state.max, state.value + 1)
+            value = clamp(
+                state.min,
+                state.max,
+                state.value + 1 * action.direction
+            )
+            onChange(value)
             return {
                 ...state,
                 value,
@@ -91,6 +99,13 @@ const eventHandling = ({ dispatch, isActive }) => () => {
     }
 }
 
+const DIRECTIONS = {
+    37: -1,
+    38: 1,
+    39: 1,
+    40: -1,
+}
+
 export default ({
     min,
     max,
@@ -100,11 +115,12 @@ export default ({
     size,
     steps,
     snap,
+    onChange,
 }) => {
     const svg = useRef()
     const container = useRef()
     const [{ percentage, value, angle, isActive }, dispatch] = useReducer(
-        reducer,
+        reducer(onChange),
         {
             isActive: false,
             min,
@@ -128,8 +144,15 @@ export default ({
         angle,
         onStart: e => dispatch({ ...e, type: 'START' }),
         onKeyDown: e => {
+            const direction = DIRECTIONS[e.keyCode]
+            if (!direction) {
+                return
+            }
             e.preventDefault()
-            dispatch({ type: 'INCREASE' })
+            dispatch({
+                type: 'INCREASE',
+                direction,
+            })
         },
     }
 }

@@ -29,6 +29,7 @@ export const Knob = ({
             angleRange,
             size,
             steps: stepsToSnapTo(steps, snap),
+            onChange,
         }
     )
 
