@@ -1,0 +1,28 @@
+{
+    "name": "react-knob",
+    "version": "0.1.0",
+    "description": "",
+    "main": "lib/prod.js",
+    "scripts": {
+        "prepublishOnly": "npm run release",
+        "release": "npm run build:dev && npm run build:prod",
+        "build:prod": "NODE_ENV=production rollup -c",
+        "build:dev": "NODE_ENV=development rollup -c"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^16.7.0-alpha.0",
+        "react-dom": "^16.7.0-alpha.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.2.0",
+        "@babel/preset-env": "^7.2.0",
+        "@babel/preset-react": "^7.0.0",
+        "rollup": "^0.67.4",
+        "rollup-plugin-babel": "^4.1.0",
+        "rollup-plugin-commonjs": "^9.2.0",
+        "rollup-plugin-node-resolve": "^4.0.0",
+        "rollup-plugin-replace": "^2.1.0"
+    }
+}
