@@ -1,9 +1,13 @@
 import React from 'react'
 
-const renderCircle = ({ tickWidth, translateX, translateY }) => (_, i) => (
+const renderCircle = ({ tickWidth, translateX, translateY, color }) => (
+    _,
+    i
+) => (
     <circle
         r={tickWidth}
         key={i}
+        fill={color}
         transform={`translate( ${translateX} ${translateY})`}
     />
 )
@@ -15,11 +19,13 @@ const renderRect = ({
     angleOffset,
     stepSize,
     center,
+    color,
 }) => (_, i) => (
     <rect
         width={tickWidth}
         height={tickHeight}
         key={i}
+        fill={color}
         transform={`
         rotate(${angleOffset + stepSize * i} ${center} ${center}) 
         translate( ${translateX} ${translateY})
@@ -37,16 +43,17 @@ export const Scale = ({
     tickHeight,
     angleOffset,
     center,
+    color,
     fn,
 }) => {
     const stepSize = angleRange / steps
     const length = steps + (angleRange === 360 ? 0 : 1)
-    const translateX = center - tickWidth
+    const translateX = center - tickWidth / 2
     const translateY = center - radius
 
     const renderFn =
         type === 'circle'
-            ? renderCircle({ tickWidth, translateX, translateY })
+            ? renderCircle({ tickWidth, translateX, translateY, color })
             : type === 'rect'
             ? renderRect({
                   tickWidth,
@@ -56,6 +63,7 @@ export const Scale = ({
                   angleOffset,
                   stepSize,
                   center,
+                  color,
               })
             : renderCustom({
                   fn,
@@ -66,6 +74,7 @@ export const Scale = ({
                   angleOffset,
                   stepSize,
                   center,
+                  color,
               })
     return <g>{Array.from({ length }, renderFn)}</g>
 }

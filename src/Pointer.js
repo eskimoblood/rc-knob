@@ -2,7 +2,6 @@ import React from 'react'
 
 export const Pointer = ({
     children,
-    size,
     width,
     height = width,
     angleOffset,
@@ -10,9 +9,9 @@ export const Pointer = ({
     percentage,
     radius,
     center,
-    style,
     type,
-    fill,
+    color,
+    className,
 }) => (
     <g
         transform={`
@@ -26,10 +25,20 @@ export const Pointer = ({
                     width,
                     height,
                     percentage,
-                    fill,
+                    color,
+                    className,
                 })
             )}
-        {type === 'rect' && <rect width={width} height={height} fill={fill} />}
-        {type === 'circle' && <circle r={width} fill={fill} />}
+        {type === 'rect' && (
+            <rect
+                width={width}
+                height={height}
+                fill={color}
+                className={className}
+            />
+        )}
+        {type === 'circle' && (
+            <circle r={width} fill={color} className={className} />
+        )}
     </g>
 )
