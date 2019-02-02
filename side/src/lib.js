@@ -115,6 +115,9 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
+var clamp = function clamp(min, max, value) {
+  return Math.max(min, Math.min(max, value));
+};
 var caclulatePercentage = function caclulatePercentage(_ref) {
   var startX = _ref.startX,
       startY = _ref.startY,
@@ -128,39 +131,11 @@ var caclulatePercentage = function caclulatePercentage(_ref) {
   var angle = degree < 0 ? degree + 360 : degree % 360;
 
   if (angle <= angleRange) {
-    return Math.max(Math.min(1, angle / angleRange), 0);
+    return clamp(0, 1, angle / angleRange);
   } else {
     return +(angle - angleRange < (360 - angleRange) / 2);
   }
 };
-
-var getValueFromPercentage = function getValueFromPercentage(_ref2) {
-  var min = _ref2.min,
-      max = _ref2.max,
-      percentage = _ref2.percentage;
-  return min + (max - min) * percentage;
-};
-
-var getPercentageFromValue = function getPercentageFromValue(_ref3) {
-  var min = _ref3.min,
-      max = _ref3.max,
-      value = _ref3.value;
-  return (value - min) / (max - min) / 100;
-};
-
-var clamp = function clamp(min, max, value) {
-  return Math.max(min, Math.min(max, value));
-};
-
-var getStartXY = function getStartXY(_ref4) {
-  var container = _ref4.container,
-      size = _ref4.size;
-  return {
-    startX: Math.floor(container.current.offsetLeft) + size / 2,
-    startY: Math.floor(container.current.offsetTop) + size / 2
-  };
-};
-
 var findClosest = function findClosest(values, value) {
   var result, lastDelta;
   values.some(function (item) {
@@ -175,47 +150,72 @@ var findClosest = function findClosest(values, value) {
   });
   return result;
 };
-
-var reducer = function reducer(state, action) {
-  switch (action.type) {
-    case 'START':
-      return _objectSpread({}, state, {
-        isActive: true
-      }, getStartXY(state));
-
-    case 'MOVE':
-      var percentage = caclulatePercentage(_objectSpread({}, state, action));
-      return _objectSpread({}, state, {
-        percentage: percentage,
-        value: getValueFromPercentage(_objectSpread({}, state, {
-          percentage: percentage
-        }))
-      });
-
-    case 'INCREASE':
-      var value = clamp(state.min, state.max, state.value + 1);
-      return _objectSpread({}, state, {
-        value: value,
-        percentage: getPercentageFromValue(_objectSpread({}, state, {
-          value: value
-        }))
-      });
-
-    default:
-      return _objectSpread({}, state, {
-        isActive: false,
-        value: state.value
-      });
-  }
+var getValueFromPercentage = function getValueFromPercentage(_ref2) {
+  var min = _ref2.min,
+      max = _ref2.max,
+      percentage = _ref2.percentage;
+  return min + (max - min) * percentage;
+};
+var getPercentageFromValue = function getPercentageFromValue(_ref3) {
+  var min = _ref3.min,
+      max = _ref3.max,
+      value = _ref3.value;
+  return (value - min) / (max - min);
+};
+var getStartXY = function getStartXY(_ref4) {
+  var container = _ref4.container,
+      size = _ref4.size;
+  return {
+    startX: Math.floor(container.current.offsetLeft) + size / 2,
+    startY: Math.floor(container.current.offsetTop) + size / 2
+  };
 };
 
-var eventHandling = function eventHandling(_ref5) {
-  var dispatch = _ref5.dispatch,
-      isActive = _ref5.isActive;
+var DIRECTIONS = {
+  37: -1,
+  38: 1,
+  39: 1,
+  40: -1
+};
+var onMouseMoveStart = function onMouseMoveStart(dispatch) {
+  return function (e) {
+    return dispatch(_objectSpread({}, e, {
+      type: 'START'
+    }));
+  };
+};
+var onKeyDown = function onKeyDown(dispatch) {
+  return function (e) {
+    var direction = DIRECTIONS[e.keyCode];
+
+    if (!direction) {
+      return;
+    } else {
+      e.preventDefault();
+      dispatch({
+        type: 'STEPS',
+        direction: direction
+      });
+    }
+  };
+};
+var onScroll = function onScroll(dispatch) {
+  return function (e) {
+    var direction = e.deltaX < 0 || e.deltaY > 0 ? 1 : e.deltaX > 0 || e.deltaY < 0 ? -1 : 0;
+    e.preventDefault();
+    dispatch({
+      type: 'STEPS',
+      direction: direction
+    });
+  };
+};
+var handleEventListener = function handleEventListener(_ref) {
+  var dispatch = _ref.dispatch,
+      isActive = _ref.isActive;
   return function () {
-    var onMove = function onMove(_ref6) {
-      var pageX = _ref6.pageX,
-          pageY = _ref6.pageY;
+    var onMove = function onMove(_ref2) {
+      var pageX = _ref2.pageX,
+          pageY = _ref2.pageY;
       return dispatch({
         pageX: pageX,
         pageY: pageY,
@@ -240,21 +240,86 @@ var eventHandling = function eventHandling(_ref5) {
   };
 };
 
-var useUpdate = (function (_ref7) {
-  var min = _ref7.min,
-      max = _ref7.max,
-      initialValue = _ref7.initialValue,
-      _ref7$angleOffset = _ref7.angleOffset,
-      angleOffset = _ref7$angleOffset === void 0 ? 0 : _ref7$angleOffset,
-      _ref7$angleRange = _ref7.angleRange,
-      angleRange = _ref7$angleRange === void 0 ? 360 : _ref7$angleRange,
-      size = _ref7.size,
-      steps = _ref7.steps,
-      snap = _ref7.snap;
+var onStart = function onStart(state) {
+  return _objectSpread({}, state, {
+    isActive: true
+  }, getStartXY(state));
+};
+
+var onMove = function onMove(_ref) {
+  var state = _ref.state,
+      action = _ref.action,
+      onChange = _ref.onChange;
+  var percentage = caclulatePercentage(_objectSpread({}, state, action));
+  var value = getValueFromPercentage(_objectSpread({}, state, {
+    percentage: percentage
+  }));
+  onChange(value);
+  return _objectSpread({}, state, {
+    percentage: percentage,
+    value: value
+  });
+};
+
+var onChangeByStep = function onChangeByStep(_ref2) {
+  var state = _ref2.state,
+      action = _ref2.action,
+      onChange = _ref2.onChange;
+  var value = clamp(state.min, state.max, state.value + 1 * action.direction);
+  onChange(value);
+  return _objectSpread({}, state, {
+    value: value,
+    percentage: getPercentageFromValue(_objectSpread({}, state, {
+      value: value
+    }))
+  });
+};
+
+var reducer = function reducer(onChange) {
+  return function (state, action) {
+    switch (action.type) {
+      case 'START':
+        return onStart(state);
+
+      case 'MOVE':
+        return onMove({
+          state: state,
+          action: action,
+          onChange: onChange
+        });
+
+      case 'STEPS':
+        return onChangeByStep({
+          state: state,
+          action: action,
+          onChange: onChange
+        });
+
+      default:
+        return _objectSpread({}, state, {
+          isActive: false,
+          value: state.value
+        });
+    }
+  };
+};
+
+var useUpdate = (function (_ref3) {
+  var min = _ref3.min,
+      max = _ref3.max,
+      initialValue = _ref3.initialValue,
+      _ref3$angleOffset = _ref3.angleOffset,
+      angleOffset = _ref3$angleOffset === void 0 ? 0 : _ref3$angleOffset,
+      _ref3$angleRange = _ref3.angleRange,
+      angleRange = _ref3$angleRange === void 0 ? 360 : _ref3$angleRange,
+      size = _ref3.size,
+      steps = _ref3.steps,
+      snap = _ref3.snap,
+      onChange = _ref3.onChange;
   var svg = React.useRef();
   var container = React.useRef();
 
-  var _useReducer = React.useReducer(reducer, {
+  var _useReducer = React.useReducer(reducer(onChange), {
     isActive: false,
     min: min,
     max: max,
@@ -274,7 +339,7 @@ var useUpdate = (function (_ref7) {
       isActive = _useReducer2$.isActive,
       dispatch = _useReducer2[1];
 
-  React.useEffect(eventHandling({
+  React.useEffect(handleEventListener({
     dispatch: dispatch,
     isActive: isActive
   }), [isActive]);
@@ -284,12 +349,9 @@ var useUpdate = (function (_ref7) {
     percentage: steps ? findClosest(steps, percentage) : percentage,
     value: value,
     angle: angle,
-    onStart: function onStart(e) {
-      return dispatch(_objectSpread({}, e, {
-        type: 'START'
-      }));
-    },
-    dispatch: dispatch
+    onStart: onMouseMoveStart(dispatch),
+    onKeyDown: onKeyDown(dispatch),
+    onScroll: onScroll(dispatch)
   };
 });
 
@@ -325,14 +387,16 @@ var Knob = function Knob(_ref) {
     angleOffset: angleOffset,
     angleRange: angleRange,
     size: size,
-    steps: stepsToSnapTo(steps, snap)
+    steps: stepsToSnapTo(steps, snap),
+    onChange: onChange
   }),
       percentage = _useUpdate.percentage,
       value = _useUpdate.value,
       onStart = _useUpdate.onStart,
       svg = _useUpdate.svg,
       container = _useUpdate.container,
-      dispatch = _useUpdate.dispatch;
+      onKeyDown = _useUpdate.onKeyDown,
+      onScroll = _useUpdate.onScroll;
 
   return React__default.createElement("div", {
     ref: container,
@@ -347,11 +411,8 @@ var Knob = function Knob(_ref) {
     "aria-valuenow": value,
     "aria-valuetext": ariaValueText,
     "aria-labelledby": ariaLabelledBy,
-    onKeyDown: function onKeyDown() {
-      return dispatch({
-        type: 'INCREASE'
-      });
-    }
+    onKeyDown: onKeyDown,
+    onWheel: onScroll
   }, React__default.createElement("svg", {
     onMouseDown: onStart,
     width: size,
@@ -428,11 +489,19 @@ var Arc = function Arc(_ref2) {
 var renderCircle = function renderCircle(_ref) {
   var tickWidth = _ref.tickWidth,
       translateX = _ref.translateX,
-      translateY = _ref.translateY;
-  return function () {
+      translateY = _ref.translateY,
+      color = _ref.color,
+      active = _ref.active,
+      activeColor = _ref.activeColor,
+      activeClassName = _ref.activeClassName,
+      className = _ref.className;
+  return function (_, i) {
     return React__default.createElement("circle", {
       r: tickWidth,
       key: i,
+      className: i === active ? activeClassName : className,
+      fill: i === active ? activeColor : color,
+      stroke: "none",
       transform: "translate( ".concat(translateX, " ").concat(translateY, ")")
     });
   };
@@ -445,9 +514,17 @@ var renderRect = function renderRect(_ref2) {
       translateY = _ref2.translateY,
       angleOffset = _ref2.angleOffset,
       stepSize = _ref2.stepSize,
-      center = _ref2.center;
+      center = _ref2.center,
+      color = _ref2.color,
+      active = _ref2.active,
+      activeColor = _ref2.activeColor,
+      activeClassName = _ref2.activeClassName,
+      className = _ref2.className;
   return function (_, i) {
-    return React__default.createElement("rect", {
+    return console.log('i,active', i, active) || React__default.createElement("rect", {
+      className: i === active ? activeClassName : className,
+      fill: i === active ? activeColor : color,
+      stroke: "none",
       width: tickWidth,
       height: tickHeight,
       key: i,
@@ -456,7 +533,10 @@ var renderRect = function renderRect(_ref2) {
   };
 };
 
-var renderCustom = function renderCustom(props) {
+var renderCustom = function renderCustom(_ref3) {
+  var fn = _ref3.fn,
+      props = _objectWithoutProperties(_ref3, ["fn"]);
+
   return function (_, i) {
     return fn(_objectSpread({}, props, {
       i: i
@@ -464,32 +544,49 @@ var renderCustom = function renderCustom(props) {
   };
 };
 
-var Scale = function Scale(_ref3) {
-  var angleRange = _ref3.angleRange,
-      steps = _ref3.steps,
-      type = _ref3.type,
-      radius = _ref3.radius,
-      tickWidth = _ref3.tickWidth,
-      tickHeight = _ref3.tickHeight,
-      angleOffset = _ref3.angleOffset,
-      center = _ref3.center,
-      fn = _ref3.fn;
+var Scale = function Scale(_ref4) {
+  var angleRange = _ref4.angleRange,
+      steps = _ref4.steps,
+      _ref4$type = _ref4.type,
+      type = _ref4$type === void 0 ? 'rect' : _ref4$type,
+      radius = _ref4.radius,
+      tickWidth = _ref4.tickWidth,
+      tickHeight = _ref4.tickHeight,
+      angleOffset = _ref4.angleOffset,
+      center = _ref4.center,
+      color = _ref4.color,
+      _ref4$activeColor = _ref4.activeColor,
+      activeColor = _ref4$activeColor === void 0 ? color : _ref4$activeColor,
+      className = _ref4.className,
+      _ref4$activeClassName = _ref4.activeClassName,
+      activeClassName = _ref4$activeClassName === void 0 ? className : _ref4$activeClassName,
+      fn = _ref4.fn,
+      percentage = _ref4.percentage;
   var stepSize = angleRange / steps;
   var length = steps + (angleRange === 360 ? 0 : 1);
-  var translateX = center - tickWidth;
+  var translateX = center - tickWidth / 2;
   var translateY = center - radius;
+  var active = Math.round((length - 1) * percentage);
   var renderFn = type === 'circle' ? renderCircle({
     tickWidth: tickWidth,
     translateX: translateX,
-    translateY: translateY
-  }) : type === 'rect' ? renderRect({
+    translateY: translateY,
+    color: color,
+    active: active,
+    activeColor: activeColor,
+    activeClassName: activeClassName
+  }) : type === 'rect' && !fn ? renderRect({
     tickWidth: tickWidth,
     tickHeight: tickHeight,
     translateX: translateX,
     translateY: translateY,
     angleOffset: angleOffset,
     stepSize: stepSize,
-    center: center
+    center: center,
+    color: color,
+    active: active,
+    activeColor: activeColor,
+    activeClassName: activeClassName
   }) : renderCustom({
     fn: fn,
     tickWidth: tickWidth,
@@ -498,18 +595,19 @@ var Scale = function Scale(_ref3) {
     translateY: translateY,
     angleOffset: angleOffset,
     stepSize: stepSize,
-    center: center
+    center: center,
+    color: color,
+    active: active,
+    activeColor: activeColor,
+    activeClassName: activeClassName
   });
   return React__default.createElement("g", null, Array.from({
     length: length
-  }, function (_, i) {
-    return renderFn;
-  }));
+  }, renderFn));
 };
 
 var Pointer = function Pointer(_ref) {
   var children = _ref.children,
-      size = _ref.size,
       width = _ref.width,
       _ref$height = _ref.height,
       height = _ref$height === void 0 ? width : _ref$height,
@@ -518,25 +616,26 @@ var Pointer = function Pointer(_ref) {
       percentage = _ref.percentage,
       radius = _ref.radius,
       center = _ref.center,
-      style = _ref.style,
       type = _ref.type,
-      fill = _ref.fill;
+      color = _ref.color,
+      className = _ref.className;
   return React__default.createElement("g", {
     transform: "\n        rotate(".concat(angleOffset + angleRange * percentage, " ").concat(center, " ").concat(center, ")\n        translate( ").concat(center - width / 2, " ").concat(center - radius - height, ")\n        ")
   }, children && React__default.Children.map(children, function (child) {
     return React__default.cloneElement(child, {
       width: width,
       height: height,
-      percentage: percentage,
-      fill: fill
+      percentage: percentage
     });
   }), type === 'rect' && React__default.createElement("rect", {
     width: width,
     height: height,
-    fill: fill
+    fill: color,
+    className: className
   }), type === 'circle' && React__default.createElement("circle", {
     r: width,
-    fill: fill
+    fill: color,
+    className: className
   }));
 };
 

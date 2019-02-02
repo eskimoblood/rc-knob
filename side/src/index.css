@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:100,300');
+@import url('https://fonts.googleapis.com/css?family=Eczar:800');
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    padding-top: 254px;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+.value {
+    font-family: 'Eczar', serif;
+    fill: #fc5a96;
+    font-size: 50px;
+}
+.value2 {
+    font-family: 'Work Sans', sans-serif;
+    fill: #fc5a96;
+    font-size: 30px;
+}
