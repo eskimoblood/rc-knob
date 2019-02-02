@@ -25,8 +25,6 @@ export const Pointer = ({
                     width,
                     height,
                     percentage,
-                    color,
-                    className,
                 })
             )}
         {type === 'rect' && (

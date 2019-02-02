@@ -20,18 +20,24 @@ export const Knob = ({
     ariaValueText,
     ariaLabelledBy,
 }) => {
-    const { percentage, value, onStart, svg, container, onKeyDown } = useUpdate(
-        {
-            min,
-            max,
-            initialValue,
-            angleOffset,
-            angleRange,
-            size,
-            steps: stepsToSnapTo(steps, snap),
-            onChange,
-        }
-    )
+    const {
+        percentage,
+        value,
+        onStart,
+        svg,
+        container,
+        onKeyDown,
+        onScroll,
+    } = useUpdate({
+        min,
+        max,
+        initialValue,
+        angleOffset,
+        angleRange,
+        size,
+        steps: stepsToSnapTo(steps, snap),
+        onChange,
+    })
 
     return (
         <div
@@ -44,6 +50,7 @@ export const Knob = ({
             aria-valuetext={ariaValueText}
             aria-labelledby={ariaLabelledBy}
             onKeyDown={onKeyDown}
+            onWheel={onScroll}
         >
             <svg onMouseDown={onStart} width={size} height={size} ref={svg}>
                 {React.Children.map(children, child =>
