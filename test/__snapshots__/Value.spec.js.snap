@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Value renders correct with a given value 1`] = `
+<text
+  className="someClassName"
+  style={
+    Object {
+      "userSelect": "none",
+    }
+  }
+  textAnchor="middle"
+  x="50%"
+  y={50}
+>
+  10
+</text>
+`;

@@ -1,41 +1,53 @@
 {
-    "name": "rc-knob",
-    "version": "1.0.0-alpha.2",
-    "description": "React component library to render knobs",
-    "homepage": "https://eskimoblood.github.io/rc-knob/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/eskimoblood/rc-knob.git"
-    },
-    "bugs": {
-        "url": "https://github.com/eskimoblood/rc-knob/issues"
-    },
-    "main": "lib/index.js",
-    "files": [
-        "lib/index.js"
-    ],
-    "scripts": {
-        "prepublishOnly": "npm run release",
-        "release": "npm run build:dev && npm run build:prod",
-        "build:prod": "NODE_ENV=production rollup -c",
-        "build:dev": "NODE_ENV=development rollup -c"
-    },
-    "author": {
-        "name": "Andreas Köberle"
-    },
-    "license": "ISC",
-    "peerDependencies": {
-        "react": "16.8.0-alpha.1",
-        "react-dom": "16.8.0-alpha.1"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.2.0",
-        "@babel/preset-env": "^7.2.0",
-        "@babel/preset-react": "^7.0.0",
-        "rollup": "^0.67.4",
-        "rollup-plugin-babel": "^4.1.0",
-        "rollup-plugin-commonjs": "^9.2.0",
-        "rollup-plugin-node-resolve": "^4.0.0",
-        "rollup-plugin-replace": "^2.1.0"
-    }
+  "name": "rc-knob",
+  "version": "1.0.0-alpha.2",
+  "description": "React component library to render knobs",
+  "homepage": "https://eskimoblood.github.io/rc-knob/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eskimoblood/rc-knob.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eskimoblood/rc-knob/issues"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "lib/index.js"
+  ],
+  "scripts": {
+    "prepublishOnly": "npm run release",
+    "release": "npm run build:dev && npm run build:prod",
+    "build:prod": "NODE_ENV=production rollup -c",
+    "build:dev": "NODE_ENV=development rollup -c",
+    "test": "jest"
+  },
+  "author": {
+    "name": "Andreas Köberle"
+  },
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "16.8.0-alpha.1",
+    "react-dom": "16.8.0-alpha.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.0.0",
+    "babel-plugin-dynamic-import-node": "^2.2.0",
+    "babel-preset-jest": "^24.0.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
+    "enzyme-to-json": "^3.3.5",
+    "jest": "^24.0.0",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1",
+    "react-test-renderer": "^16.7.0",
+    "rollup": "^0.67.4",
+    "rollup-plugin-babel": "^4.1.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-replace": "^2.1.0"
+  }
 }
