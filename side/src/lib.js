@@ -355,83 +355,6 @@ var useUpdate = (function (_ref3) {
   };
 });
 
-var stepsToSnapTo = function stepsToSnapTo(steps, snap) {
-  return steps && snap ? Array.from({
-    length: steps + 1
-  }, function (_, i) {
-    return 1 / steps * i;
-  }) : undefined;
-};
-
-var Knob = function Knob(_ref) {
-  var min = _ref.min,
-      max = _ref.max,
-      initialValue = _ref.value,
-      _ref$angleOffset = _ref.angleOffset,
-      angleOffset = _ref$angleOffset === void 0 ? 0 : _ref$angleOffset,
-      _ref$angleRange = _ref.angleRange,
-      angleRange = _ref$angleRange === void 0 ? 360 : _ref$angleRange,
-      size = _ref.size,
-      onChange = _ref.onChange,
-      children = _ref.children,
-      steps = _ref.steps,
-      _ref$snap = _ref.snap,
-      snap = _ref$snap === void 0 ? false : _ref$snap,
-      ariaValueText = _ref.ariaValueText,
-      ariaLabelledBy = _ref.ariaLabelledBy;
-
-  var _useUpdate = useUpdate({
-    min: min,
-    max: max,
-    initialValue: initialValue,
-    angleOffset: angleOffset,
-    angleRange: angleRange,
-    size: size,
-    steps: stepsToSnapTo(steps, snap),
-    onChange: onChange
-  }),
-      percentage = _useUpdate.percentage,
-      value = _useUpdate.value,
-      onStart = _useUpdate.onStart,
-      svg = _useUpdate.svg,
-      container = _useUpdate.container,
-      onKeyDown = _useUpdate.onKeyDown,
-      onScroll = _useUpdate.onScroll;
-
-  return React__default.createElement("div", {
-    ref: container,
-    tabIndex: "0",
-    style: {
-      outline: 'none',
-      width: size,
-      height: size
-    },
-    "aria-valuemax": max,
-    "aria-valuemin": min,
-    "aria-valuenow": value,
-    "aria-valuetext": ariaValueText,
-    "aria-labelledby": ariaLabelledBy,
-    onKeyDown: onKeyDown,
-    onWheel: onScroll
-  }, React__default.createElement("svg", {
-    onMouseDown: onStart,
-    width: size,
-    height: size,
-    ref: svg
-  }, React__default.Children.map(children, function (child) {
-    return /Pointer|Scale|Arc|Value/.test(child.type.name) ? React__default.cloneElement(child, _objectSpread({
-      percentage: percentage,
-      size: size,
-      value: value,
-      angleOffset: angleOffset,
-      angleRange: angleRange,
-      radius: size / 2,
-      center: size / 2,
-      steps: steps
-    }, child.props)) : child;
-  })));
-};
-
 var pointOnCircle = function pointOnCircle(center, radius, angle) {
   return {
     x: center + radius * Math.cos(angle),
@@ -483,6 +406,39 @@ var Arc = function Arc(_ref2) {
     style: {
       fill: color
     }
+  }));
+};
+
+var Pointer = function Pointer(_ref) {
+  var children = _ref.children,
+      width = _ref.width,
+      _ref$height = _ref.height,
+      height = _ref$height === void 0 ? width : _ref$height,
+      angleOffset = _ref.angleOffset,
+      angleRange = _ref.angleRange,
+      percentage = _ref.percentage,
+      radius = _ref.radius,
+      center = _ref.center,
+      type = _ref.type,
+      color = _ref.color,
+      className = _ref.className;
+  return React__default.createElement("g", {
+    transform: "\n        rotate(".concat(angleOffset + angleRange * percentage, " ").concat(center, " ").concat(center, ")\n        translate( ").concat(center - width / 2, " ").concat(center - radius - height, ")\n        ")
+  }, children && React__default.Children.map(children, function (child) {
+    return React__default.cloneElement(child, {
+      width: width,
+      height: height,
+      percentage: percentage
+    });
+  }), type === 'rect' && React__default.createElement("rect", {
+    width: width,
+    height: height,
+    fill: color,
+    className: className
+  }), type === 'circle' && React__default.createElement("circle", {
+    r: width,
+    fill: color,
+    className: className
   }));
 };
 
@@ -606,39 +562,6 @@ var Scale = function Scale(_ref4) {
   }, renderFn));
 };
 
-var Pointer = function Pointer(_ref) {
-  var children = _ref.children,
-      width = _ref.width,
-      _ref$height = _ref.height,
-      height = _ref$height === void 0 ? width : _ref$height,
-      angleOffset = _ref.angleOffset,
-      angleRange = _ref.angleRange,
-      percentage = _ref.percentage,
-      radius = _ref.radius,
-      center = _ref.center,
-      type = _ref.type,
-      color = _ref.color,
-      className = _ref.className;
-  return React__default.createElement("g", {
-    transform: "\n        rotate(".concat(angleOffset + angleRange * percentage, " ").concat(center, " ").concat(center, ")\n        translate( ").concat(center - width / 2, " ").concat(center - radius - height, ")\n        ")
-  }, children && React__default.Children.map(children, function (child) {
-    return React__default.cloneElement(child, {
-      width: width,
-      height: height,
-      percentage: percentage
-    });
-  }), type === 'rect' && React__default.createElement("rect", {
-    width: width,
-    height: height,
-    fill: color,
-    className: className
-  }), type === 'circle' && React__default.createElement("circle", {
-    r: width,
-    fill: color,
-    className: className
-  }));
-};
-
 var Value = function Value(_ref) {
   var value = _ref.value,
       size = _ref.size,
@@ -647,7 +570,7 @@ var Value = function Value(_ref) {
       className = _ref.className,
       _ref$marginBottom = _ref.marginBottom,
       marginBottom = _ref$marginBottom === void 0 ? 0 : _ref$marginBottom;
-  return React__default.createElement("text", {
+  return value == null ? null : React__default.createElement("text", {
     style: {
       userSelect: 'none'
     },
@@ -656,6 +579,88 @@ var Value = function Value(_ref) {
     className: className,
     y: size - marginBottom
   }, value.toFixed(decimalPlace));
+};
+
+var stepsToSnapTo = function stepsToSnapTo(steps, snap) {
+  return steps && snap ? Array.from({
+    length: steps + 1
+  }, function (_, i) {
+    return 1 / steps * i;
+  }) : undefined;
+};
+
+var isInternalComponent = function isInternalComponent(_ref) {
+  var type = _ref.type;
+  return type === Arc || type === Pointer || type === Scale || type === Value;
+};
+
+var Knob = function Knob(_ref2) {
+  var min = _ref2.min,
+      max = _ref2.max,
+      initialValue = _ref2.value,
+      _ref2$angleOffset = _ref2.angleOffset,
+      angleOffset = _ref2$angleOffset === void 0 ? 0 : _ref2$angleOffset,
+      _ref2$angleRange = _ref2.angleRange,
+      angleRange = _ref2$angleRange === void 0 ? 360 : _ref2$angleRange,
+      size = _ref2.size,
+      onChange = _ref2.onChange,
+      children = _ref2.children,
+      steps = _ref2.steps,
+      _ref2$snap = _ref2.snap,
+      snap = _ref2$snap === void 0 ? false : _ref2$snap,
+      ariaValueText = _ref2.ariaValueText,
+      ariaLabelledBy = _ref2.ariaLabelledBy;
+
+  var _useUpdate = useUpdate({
+    min: min,
+    max: max,
+    initialValue: initialValue,
+    angleOffset: angleOffset,
+    angleRange: angleRange,
+    size: size,
+    steps: stepsToSnapTo(steps, snap),
+    onChange: onChange
+  }),
+      percentage = _useUpdate.percentage,
+      value = _useUpdate.value,
+      onStart = _useUpdate.onStart,
+      svg = _useUpdate.svg,
+      container = _useUpdate.container,
+      onKeyDown = _useUpdate.onKeyDown,
+      onScroll = _useUpdate.onScroll;
+
+  return React__default.createElement("div", {
+    ref: container,
+    tabIndex: "0",
+    style: {
+      outline: 'none',
+      width: size,
+      height: size
+    },
+    "aria-valuemax": max,
+    "aria-valuemin": min,
+    "aria-valuenow": value,
+    "aria-valuetext": ariaValueText,
+    "aria-labelledby": ariaLabelledBy,
+    onKeyDown: onKeyDown,
+    onWheel: onScroll
+  }, React__default.createElement("svg", {
+    onMouseDown: onStart,
+    width: size,
+    height: size,
+    ref: svg
+  }, React__default.Children.map(children, function (child) {
+    return isInternalComponent(child) ? React__default.cloneElement(child, _objectSpread({
+      percentage: percentage,
+      size: size,
+      value: value,
+      angleOffset: angleOffset,
+      angleRange: angleRange,
+      radius: size / 2,
+      center: size / 2,
+      steps: steps
+    }, child.props)) : child;
+  })));
 };
 
 exports.Knob = Knob;

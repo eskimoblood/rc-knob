@@ -1,10 +1,17 @@
 import React from 'react'
 import useUpdate from './useUpdate'
+import { Arc } from './Arc'
+import { Pointer } from './Pointer'
+import { Scale } from './Scale'
+import { Value } from './Value'
 
 const stepsToSnapTo = (steps, snap) =>
     steps && snap
         ? Array.from({ length: steps + 1 }, (_, i) => (1 / steps) * i)
         : undefined
+
+const isInternalComponent = ({ type }) =>
+    type === Arc || type === Pointer || type === Scale || type === Value
 
 export const Knob = ({
     min,
@@ -54,7 +61,7 @@ export const Knob = ({
         >
             <svg onMouseDown={onStart} width={size} height={size} ref={svg}>
                 {React.Children.map(children, child =>
-                    /Pointer|Scale|Arc|Value/.test(child.type.name)
+                    isInternalComponent(child)
                         ? React.cloneElement(child, {
                               percentage,
                               size,

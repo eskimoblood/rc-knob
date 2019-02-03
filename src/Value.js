@@ -6,14 +6,15 @@ export const Value = ({
     decimalPlace = 0,
     className,
     marginBottom = 0,
-}) => (
-    <text
-        style={{ userSelect: 'none' }}
-        x="50%"
-        textAnchor="middle"
-        className={className}
-        y={size - marginBottom}
-    >
-        {value.toFixed(decimalPlace)}
-    </text>
-)
+}) =>
+    value == null ? null : (
+        <text
+            style={{ userSelect: 'none' }}
+            x="50%"
+            textAnchor="middle"
+            className={className}
+            y={size - marginBottom}
+        >
+            {value.toFixed(decimalPlace)}
+        </text>
+    )
