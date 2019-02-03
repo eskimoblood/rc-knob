@@ -1,7 +1,7 @@
 import React from 'react'
 import Example from '../Example'
 import colors from '../colors'
-import { Arc, Pointer, Value } from '../lib'
+import { Arc, Pointer, Value } from 'rc-knob'
 
 const example = `
 <Knob 
@@ -17,7 +17,6 @@ const example = `
     radius={47.5} 
   />
   <Pointer 
-    key="pointer" 
     width={5}
     radius={40}
     type="circle"

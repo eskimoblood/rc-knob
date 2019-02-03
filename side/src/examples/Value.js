@@ -1,6 +1,6 @@
 import React from 'react'
 import Example from '../Example'
-import { Value } from '../lib'
+import { Value } from 'rc-knob'
 
 const example = `
 <Knob 

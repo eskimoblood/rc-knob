@@ -12,6 +12,7 @@ import ScaleScale from './examples/Scale_Scale'
 import PointerCustom from './examples/Pointer_custom'
 import ScaleCustom from './examples/Scale_custom'
 import ScaleStyled from './examples/Scale_styled'
+import ArcPointerStyled from './examples/Arc_Pointer_styled'
 
 export default () => (
     <div>
@@ -69,6 +70,7 @@ export default () => (
         </H2>
         <Description />
         <Grid>
+            <ArcPointerStyled />
             <ScaleStyled />
         </Grid>
     </div>

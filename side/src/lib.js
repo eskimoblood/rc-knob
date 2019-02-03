@@ -624,7 +624,8 @@ var Knob = function Knob(_ref2) {
       _ref2$snap = _ref2.snap,
       snap = _ref2$snap === void 0 ? false : _ref2$snap,
       ariaValueText = _ref2.ariaValueText,
-      ariaLabelledBy = _ref2.ariaLabelledBy;
+      ariaLabelledBy = _ref2.ariaLabelledBy,
+      className = _ref2.className;
 
   var _useUpdate = useUpdate({
     min: min,
@@ -658,7 +659,8 @@ var Knob = function Knob(_ref2) {
     "aria-valuetext": ariaValueText,
     "aria-labelledby": ariaLabelledBy,
     onKeyDown: onKeyDown,
-    onWheel: onScroll
+    onWheel: onScroll,
+    className: className
   }, React__default.createElement("svg", {
     onMouseDown: onStart,
     width: size,

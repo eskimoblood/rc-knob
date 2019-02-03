@@ -1,6 +1,6 @@
 import React from 'react'
 import Example from '../Example'
-import { Scale } from '../lib'
+import { Scale } from 'rc-knob'
 
 const example = `
 <Knob 

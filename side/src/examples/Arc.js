@@ -1,7 +1,7 @@
 import React from 'react'
 import Example from '../Example'
 import colors from '../colors'
-import { Arc } from '../lib'
+import { Arc } from 'rc-knob'
 
 const example = `
 <Knob 

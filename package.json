@@ -1,17 +1,30 @@
 {
-    "name": "react-knob",
-    "version": "0.1.0",
-    "description": "",
-    "main": "lib/prod.js",
+    "name": "rc-knob",
+    "version": "1.0.0-alpha.2",
+    "description": "React component library to render knobs",
+    "homepage": "https://eskimoblood.github.io/rc-knob/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eskimoblood/rc-knob.git"
+    },
+    "bugs": {
+        "url": "https://github.com/eskimoblood/rc-knob/issues"
+    },
+    "main": "lib/index.js",
+    "files": [
+        "lib/index.js"
+    ],
     "scripts": {
         "prepublishOnly": "npm run release",
         "release": "npm run build:dev && npm run build:prod",
         "build:prod": "NODE_ENV=production rollup -c",
         "build:dev": "NODE_ENV=development rollup -c"
     },
-    "author": "",
+    "author": {
+        "name": "Andreas Köberle"
+    },
     "license": "ISC",
-    "dependencies": {
+    "peerDependencies": {
         "react": "16.8.0-alpha.1",
         "react-dom": "16.8.0-alpha.1"
     },

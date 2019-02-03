@@ -26,6 +26,7 @@ export const Knob = ({
     snap = false,
     ariaValueText,
     ariaLabelledBy,
+    className,
 }) => {
     const {
         percentage,
@@ -58,6 +59,7 @@ export const Knob = ({
             aria-labelledby={ariaLabelledBy}
             onKeyDown={onKeyDown}
             onWheel={onScroll}
+            className={className}
         >
             <svg onMouseDown={onStart} width={size} height={size} ref={svg}>
                 {React.Children.map(children, child =>

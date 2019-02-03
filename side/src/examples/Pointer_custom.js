@@ -1,7 +1,7 @@
 import React from 'react'
 import Example from '../Example'
 import colors from '../colors'
-import { Pointer, Arc } from '../lib'
+import { Pointer, Arc } from 'rc-knob'
 
 const example = `
 const CustomPointer = ({ width, percentage }) => (

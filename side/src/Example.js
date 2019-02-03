@@ -1,7 +1,7 @@
 import React from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { H3, Cell, CodeBlock } from './styled'
-import { Knob } from './lib'
+import { Knob } from 'rc-knob'
 import theme from './prismTheme'
 
 const renderKnob = (child, options = {}) => (

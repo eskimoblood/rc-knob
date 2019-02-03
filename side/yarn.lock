@@ -8165,6 +8165,11 @@ raw-body@2.3.3:
     iconv-lite "0.4.23"
     unpipe "1.0.0"
 
+rc-knob@1.0.0-alpha.2:
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/rc-knob/-/rc-knob-1.0.0-alpha.2.tgz#ce56a08ac546322a304d6fb0a7421a0ba80d0912"
+  integrity sha512-gbFvMIHa8ciD2lvDrz50i5RAVzBPmMXvDz50Ak9IXBhupbeypDcbktTV+c5Lboeq4U7DJ5UzqmSWnw0g60jtfg==
+
 rc@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
