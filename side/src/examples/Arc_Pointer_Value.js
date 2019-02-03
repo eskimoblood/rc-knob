@@ -49,7 +49,7 @@ export default () => (
                 type="circle"
                 color={colors.secondary}
             />,
-            <Value marginBottom={40} className="value2" />,
+            <Value marginBottom={40} className="value2" key="value" />,
         ]}
     />
 )

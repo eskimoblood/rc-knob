@@ -10,18 +10,15 @@ const calcPath = ({
     percentage,
     angleOffset,
     angleRange,
-    size,
     arcWidth,
     radius: outerRadius,
     center,
-    backgroundColor,
 }) => {
     const angle = angleRange * percentage
     const startAngle = angleOffset - 90
-    const endAngle = startAngle + angle
     const innerRadius = outerRadius - arcWidth
     const startAngleDegree = degTorad(startAngle)
-    const endAngleDegree = degTorad(endAngle)
+    const endAngleDegree = degTorad(startAngle + angle)
     const largeArcFlag = angle < 180 ? 0 : 1
 
     const p1 = pointOnCircle(center, outerRadius, endAngleDegree)

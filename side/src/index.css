@@ -31,3 +31,14 @@ code {
     fill: #fc5a96;
     font-size: 30px;
 }
+
+.activeScale {
+    fill: #180094;
+    r: 2px;
+    transition: 100ms ease-in-out;
+}
+.normalScale {
+    fill: #fc5a96;
+    r: 1px;
+    transition: 450ms ease-in-out;
+}

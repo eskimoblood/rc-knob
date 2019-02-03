@@ -209,6 +209,15 @@ var onScroll = function onScroll(dispatch) {
     });
   };
 };
+
+var addEventToBody = function addEventToBody(name, fn) {
+  return document.body.addEventListener(name, fn);
+};
+
+var removeEventFromBody = function removeEventFromBody(name, fn) {
+  return document.body.removeEventListener(name, fn);
+};
+
 var handleEventListener = function handleEventListener(_ref) {
   var dispatch = _ref.dispatch,
       isActive = _ref.isActive;
@@ -230,11 +239,11 @@ var handleEventListener = function handleEventListener(_ref) {
     };
 
     if (isActive) {
-      document.body.addEventListener('mousemove', onMove);
-      document.body.addEventListener('mouseup', onStop);
+      addEventToBody('mousemove', onMove);
+      addEventToBody('mouseup', onStop);
       return function () {
-        document.body.removeEventListener('mousemove', onMove);
-        document.body.removeEventListener('mouseup', onStop);
+        removeEventFromBody('mousemove', onMove);
+        removeEventFromBody('mouseup', onStop);
       };
     }
   };
@@ -370,17 +379,14 @@ var calcPath = function calcPath(_ref) {
   var percentage = _ref.percentage,
       angleOffset = _ref.angleOffset,
       angleRange = _ref.angleRange,
-      size = _ref.size,
       arcWidth = _ref.arcWidth,
       outerRadius = _ref.radius,
-      center = _ref.center,
-      backgroundColor = _ref.backgroundColor;
+      center = _ref.center;
   var angle = angleRange * percentage;
   var startAngle = angleOffset - 90;
-  var endAngle = startAngle + angle;
   var innerRadius = outerRadius - arcWidth;
   var startAngleDegree = degTorad(startAngle);
-  var endAngleDegree = degTorad(endAngle);
+  var endAngleDegree = degTorad(startAngle + angle);
   var largeArcFlag = angle < 180 ? 0 : 1;
   var p1 = pointOnCircle(center, outerRadius, endAngleDegree);
   var p2 = pointOnCircle(center, outerRadius, startAngleDegree);
@@ -446,19 +452,22 @@ var renderCircle = function renderCircle(_ref) {
   var tickWidth = _ref.tickWidth,
       translateX = _ref.translateX,
       translateY = _ref.translateY,
+      angleOffset = _ref.angleOffset,
+      stepSize = _ref.stepSize,
+      center = _ref.center,
       color = _ref.color,
       active = _ref.active,
       activeColor = _ref.activeColor,
       activeClassName = _ref.activeClassName,
       className = _ref.className;
   return function (_, i) {
-    return React__default.createElement("circle", {
+    return console.log('center', center) || React__default.createElement("circle", {
       r: tickWidth,
       key: i,
       className: i === active ? activeClassName : className,
       fill: i === active ? activeColor : color,
       stroke: "none",
-      transform: "translate( ".concat(translateX, " ").concat(translateY, ")")
+      transform: "\n        rotate(".concat(angleOffset + stepSize * i, " ").concat(center, " ").concat(center, ") \n        translate(").concat(translateX, " ").concat(translateY, ")\n        ")
     });
   };
 };
@@ -477,14 +486,14 @@ var renderRect = function renderRect(_ref2) {
       activeClassName = _ref2.activeClassName,
       className = _ref2.className;
   return function (_, i) {
-    return console.log('i,active', i, active) || React__default.createElement("rect", {
+    return React__default.createElement("rect", {
       className: i === active ? activeClassName : className,
       fill: i === active ? activeColor : color,
       stroke: "none",
       width: tickWidth,
       height: tickHeight,
       key: i,
-      transform: "\n        rotate(".concat(angleOffset + stepSize * i, " ").concat(center, " ").concat(center, ") \n        translate( ").concat(translateX, " ").concat(translateY, ")\n        ")
+      transform: "\n        rotate(".concat(angleOffset + stepSize * i, " ").concat(center, " ").concat(center, ") \n        translate(").concat(translateX, " ").concat(translateY, ")\n        ")
     });
   };
 };
@@ -527,9 +536,13 @@ var Scale = function Scale(_ref4) {
     tickWidth: tickWidth,
     translateX: translateX,
     translateY: translateY,
+    center: center,
+    angleOffset: angleOffset,
+    stepSize: stepSize,
     color: color,
     active: active,
     activeColor: activeColor,
+    className: className,
     activeClassName: activeClassName
   }) : type === 'rect' && !fn ? renderRect({
     tickWidth: tickWidth,
@@ -542,6 +555,7 @@ var Scale = function Scale(_ref4) {
     color: color,
     active: active,
     activeColor: activeColor,
+    className: className,
     activeClassName: activeClassName
   }) : renderCustom({
     fn: fn,
@@ -555,6 +569,7 @@ var Scale = function Scale(_ref4) {
     color: color,
     active: active,
     activeColor: activeColor,
+    className: className,
     activeClassName: activeClassName
   });
   return React__default.createElement("g", null, Array.from({

@@ -13,7 +13,6 @@ const example = `
   max={100}
 >
   <Scale
-    key="scale"
     steps={10}
     tickWidth={1}
     tickHeight={5}
@@ -21,7 +20,6 @@ const example = `
     color="${colors.primary}"
   />
   <Scale 
-    key="scale" 
     tickWidth={1}
     tickHeight={2}
     radius={45} 
@@ -39,12 +37,12 @@ const example = `
 
 export default () => (
     <Example
-        title="Scale && Pointer && SVG"
+        title="Scale && Pointer"
         example={example}
         options={{ steps: 50 }}
         knob={[
             <Scale
-                key="scale"
+                key="scale1"
                 steps={10}
                 tickWidth={1}
                 tickHeight={5}
@@ -52,7 +50,7 @@ export default () => (
                 color={colors.primary}
             />,
             <Scale
-                key="scale"
+                key="scale2"
                 tickWidth={1}
                 tickHeight={2}
                 radius={45}

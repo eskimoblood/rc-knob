@@ -4,21 +4,29 @@ const renderCircle = ({
     tickWidth,
     translateX,
     translateY,
+    angleOffset,
+    stepSize,
+    center,
     color,
     active,
     activeColor,
     activeClassName,
     className,
-}) => (_, i) => (
-    <circle
-        r={tickWidth}
-        key={i}
-        className={i === active ? activeClassName : className}
-        fill={i === active ? activeColor : color}
-        stroke="none"
-        transform={`translate( ${translateX} ${translateY})`}
-    />
-)
+}) => (_, i) =>
+    console.log('center', center) || (
+        <circle
+            r={tickWidth}
+            key={i}
+            className={i === active ? activeClassName : className}
+            fill={i === active ? activeColor : color}
+            stroke="none"
+            transform={`
+        rotate(${angleOffset + stepSize * i} ${center} ${center}) 
+        translate(${translateX} ${translateY})
+        `}
+        />
+    )
+
 const renderRect = ({
     tickWidth,
     tickHeight,
@@ -32,21 +40,20 @@ const renderRect = ({
     activeColor,
     activeClassName,
     className,
-}) => (_, i) =>
-    console.log('i,active', i, active) || (
-        <rect
-            className={i === active ? activeClassName : className}
-            fill={i === active ? activeColor : color}
-            stroke="none"
-            width={tickWidth}
-            height={tickHeight}
-            key={i}
-            transform={`
+}) => (_, i) => (
+    <rect
+        className={i === active ? activeClassName : className}
+        fill={i === active ? activeColor : color}
+        stroke="none"
+        width={tickWidth}
+        height={tickHeight}
+        key={i}
+        transform={`
         rotate(${angleOffset + stepSize * i} ${center} ${center}) 
-        translate( ${translateX} ${translateY})
+        translate(${translateX} ${translateY})
         `}
-        />
-    )
+    />
+)
 const renderCustom = ({ fn, ...props }) => (_, i) => fn({ ...props, i })
 
 export const Scale = ({
@@ -77,9 +84,13 @@ export const Scale = ({
                   tickWidth,
                   translateX,
                   translateY,
+                  center,
+                  angleOffset,
+                  stepSize,
                   color,
                   active,
                   activeColor,
+                  className,
                   activeClassName,
               })
             : type === 'rect' && !fn
@@ -94,6 +105,7 @@ export const Scale = ({
                   color,
                   active,
                   activeColor,
+                  className,
                   activeClassName,
               })
             : renderCustom({
@@ -108,6 +120,7 @@ export const Scale = ({
                   color,
                   active,
                   activeColor,
+                  className,
                   activeClassName,
               })
     return <g>{Array.from({ length }, renderFn)}</g>

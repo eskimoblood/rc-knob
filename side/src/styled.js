@@ -80,7 +80,7 @@ export const CodeBlock = styled.div`
         background: none !important;
     }
 `
-export const Description = styled.p`
+export const Description = styled.div`
     padding: 10px;
     background: #fff;
     font-family: 'Work Sans', sans-serif;
