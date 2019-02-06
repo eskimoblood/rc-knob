@@ -4,9 +4,9 @@
     "private": true,
     "homepage": "https://eskimoblood.github.io/rc-knob",
     "dependencies": {
-        "rc-knob": "1.0.0-alpha.2",
-        "react": "16.8.0-alpha.1",
-        "react-dom": "16.8.0-alpha.1",
+        "rc-knob": "1.0.0",
+        "react": ">=16.8.0",
+        "react-dom": ">=16.8.0",
         "react-scripts": "2.1.3",
         "react-syntax-highlighter": "10.1.2",
         "styled-components": "4.1.3"
