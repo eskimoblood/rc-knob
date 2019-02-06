@@ -1,0 +1,267 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Scale renders correct no type is set 1`] = `
+<g>
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="0"
+    stroke="none"
+    transform="
+        rotate(90 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="1"
+    stroke="none"
+    transform="
+        rotate(130 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="2"
+    stroke="none"
+    transform="
+        rotate(170 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="3"
+    stroke="none"
+    transform="
+        rotate(210 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="4"
+    stroke="none"
+    transform="
+        rotate(250 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="5"
+    stroke="none"
+    transform="
+        rotate(290 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+</g>
+`;
+
+exports[`Scale renders correct no type is set to circle 1`] = `
+<g>
+  <circle
+    className="someClassName"
+    fill="lime"
+    key="0"
+    r={2}
+    stroke="none"
+    transform="
+        rotate(90 20 20) 
+        translate(19 -20)
+        "
+  />
+  <circle
+    className="someClassName"
+    fill="lime"
+    key="1"
+    r={2}
+    stroke="none"
+    transform="
+        rotate(130 20 20) 
+        translate(19 -20)
+        "
+  />
+  <circle
+    className="someClassName"
+    fill="lime"
+    key="2"
+    r={2}
+    stroke="none"
+    transform="
+        rotate(170 20 20) 
+        translate(19 -20)
+        "
+  />
+  <circle
+    className="someClassName"
+    fill="lime"
+    key="3"
+    r={2}
+    stroke="none"
+    transform="
+        rotate(210 20 20) 
+        translate(19 -20)
+        "
+  />
+  <circle
+    className="someClassName"
+    fill="lime"
+    key="4"
+    r={2}
+    stroke="none"
+    transform="
+        rotate(250 20 20) 
+        translate(19 -20)
+        "
+  />
+  <circle
+    className="someClassName"
+    fill="lime"
+    key="5"
+    r={2}
+    stroke="none"
+    transform="
+        rotate(290 20 20) 
+        translate(19 -20)
+        "
+  />
+</g>
+`;
+
+exports[`Scale renders correct no type is set to rect 1`] = `
+<g>
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="0"
+    stroke="none"
+    transform="
+        rotate(90 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="1"
+    stroke="none"
+    transform="
+        rotate(130 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="2"
+    stroke="none"
+    transform="
+        rotate(170 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="3"
+    stroke="none"
+    transform="
+        rotate(210 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="4"
+    stroke="none"
+    transform="
+        rotate(250 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+  <rect
+    className="someClassName"
+    fill="lime"
+    height={10}
+    key="5"
+    stroke="none"
+    transform="
+        rotate(290 20 20) 
+        translate(19 -20)
+        "
+    width={2}
+  />
+</g>
+`;
+
+exports[`Scale renders correct with custom render function for ticks 1`] = `
+<g>
+  <circle
+    key="0"
+    r={2}
+    x={19}
+    y={-20}
+  />
+  <circle
+    key="1"
+    r={2}
+    x={19}
+    y={-20}
+  />
+  <circle
+    key="2"
+    r={2}
+    x={19}
+    y={-20}
+  />
+  <circle
+    key="3"
+    r={2}
+    x={19}
+    y={-20}
+  />
+  <circle
+    key="4"
+    r={2}
+    x={19}
+    y={-20}
+  />
+  <circle
+    key="5"
+    r={2}
+    x={19}
+    y={-20}
+  />
+</g>
+`;

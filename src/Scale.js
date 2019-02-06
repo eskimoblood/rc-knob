@@ -12,20 +12,19 @@ const renderCircle = ({
     activeColor,
     activeClassName,
     className,
-}) => (_, i) =>
-    console.log('center', center) || (
-        <circle
-            r={tickWidth}
-            key={i}
-            className={i === active ? activeClassName : className}
-            fill={i === active ? activeColor : color}
-            stroke="none"
-            transform={`
+}) => (_, i) => (
+    <circle
+        r={tickWidth}
+        key={i}
+        className={i === active ? activeClassName : className}
+        fill={i === active ? activeColor : color}
+        stroke="none"
+        transform={`
         rotate(${angleOffset + stepSize * i} ${center} ${center}) 
         translate(${translateX} ${translateY})
         `}
-        />
-    )
+    />
+)
 
 const renderRect = ({
     tickWidth,

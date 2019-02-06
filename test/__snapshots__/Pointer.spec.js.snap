@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pointer renders correct with a child as pointer 1`] = `
+<g
+  transform="
+        rotate(4720 10 10)
+        translate( 7.5 -45)
+        "
+>
+  <CustomPointer
+    height={5}
+    key=".0"
+    percentage={50}
+    width={5}
+  />
+</g>
+`;
+
+exports[`Pointer renders correct with type circle 1`] = `
+<g
+  transform="
+        rotate(4720 10 10)
+        translate( 7.5 -45)
+        "
+>
+  <circle
+    className="someClassName"
+    fill="red"
+    r={5}
+  />
+</g>
+`;
+
+exports[`Pointer renders correct with type rect 1`] = `
+<g
+  transform="
+        rotate(4720 10 10)
+        translate( 7.5 -42)
+        "
+>
+  <rect
+    className="someClassName"
+    fill="red"
+    height={2}
+    width={5}
+  />
+</g>
+`;
