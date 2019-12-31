@@ -3,6 +3,30 @@ import Example from '../Example'
 import { Scale } from 'rc-knob'
 
 const example = `
+const customScaleTick = ({
+    tickWidth,
+    tickHeight,
+    translateX,
+    translateY,
+    angleOffset,
+    stepSize,
+    center,
+    active,
+    i,
+}) => (
+    <rect
+        fill={\`hsl(\${(240 + (40 - i) * 4) % 360},100%, 60%)\`}
+        stroke="none"
+        width={tickWidth}
+        height={i === active ? 9 : tickHeight}
+        key={i}
+        transform={\`
+        rotate(\${angleOffset + stepSize * i} \${center} \${center}) 
+        translate( \${translateX} \${translateY})
+        \`}
+    />
+)
+
 <Knob 
   size={100}  
   angleOffset={220} 
@@ -10,6 +34,7 @@ const example = `
   steps={10}
   min={0}
   max={100}
+  onChange={value => console.log(value)}
 >
     <Scale
     steps={20}

@@ -12,10 +12,13 @@ import ScaleScale from './examples/Scale_Scale'
 import PointerCustom from './examples/Pointer_custom'
 import ScaleCustom from './examples/Scale_custom'
 import ScaleStyled from './examples/Scale_styled'
+import ScaleStyled2 from './examples/Scale_styled_2'
 import ArcPointerStyled from './examples/Arc_Pointer_styled'
+import Filter from './filter'
 
 export default () => (
     <div>
+        <Filter />
         <H1>React Knob</H1>
         <H2>
             <span>Base Components</span>
@@ -52,14 +55,8 @@ export default () => (
             <span>Custom Elements</span>
         </H2>
         <Description>
-            The <pre>Knob</pre> component and the <pre>Pointer</pre> and{' '}
-            <pre>Scale</pre> components can also render custom components. All
-            direct children of the <pre>Knob</pre> get the following props
-            passed: <pre>percentage</pre> <pre>size</pre>, <pre>value</pre>,
-            <pre>angleOffset</pre>,<pre>angleRange</pre>,{' '}
-            <pre>radius: size / 2</pre>,<pre>center: size / 2</pre>,{' '}
-            <pre>steps</pre>. The children of <pre>Pointer</pre> get{' '}
-            <pre>width</pre>, <pre>height</pre>, <pre>percentage</pre> passed.
+            The <pre>Pointer</pre> and <pre>Scale</pre> components can also
+            render custom components.
         </Description>
         <Grid>
             <PointerCustom />
@@ -68,10 +65,17 @@ export default () => (
         <H2>
             <span>Styles</span>
         </H2>
-        <Description />
+        <Description>
+            The components and the knob itself can be styled by addingthe{' '}
+            <pre>className</pre> prop. The <pre>Scale</pre> can have an
+            additional <pre>activeClassname</pre> prop to style the active tick
+            differently. As all components are SVG you can also use filters in
+            your styles.
+        </Description>
         <Grid>
             <ArcPointerStyled />
             <ScaleStyled />
+            <ScaleStyled2 />
         </Grid>
     </div>
 )

@@ -14,7 +14,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100%;
-    padding-top: 254px;
+    padding-top: 100px;
 }
 
 code {
@@ -57,4 +57,19 @@ code {
     fill: #180094;
     opacity: 1;
     transition: opacity 450ms, color 450ms ease-in-out;
+}
+
+.filter2 {
+    filter: url('#filter2');
+}
+
+.pointer {
+    fill: rgba(255, 235, 59, 0.8);
+    r: 8px;
+    transition: 100ms ease-in-out;
+}
+.normalScale2 {
+    fill: #fc5a96;
+    r: 4px;
+    transition: 450ms ease-in-out;
 }

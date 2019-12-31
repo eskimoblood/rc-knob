@@ -10,6 +10,7 @@ const example = `
   angleRange={280}
   min={0}
   max={100}
+  onChange={value => console.log(value)}
 >
   <Pointer 
     width={3} 

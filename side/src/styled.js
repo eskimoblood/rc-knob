@@ -63,7 +63,7 @@ export const Cell = styled.div`
     background: white;
     background: linear-gradient(
         135deg,
-        rgba(252, 90, 150, 1) 0%,
+        rgb(134, 98, 192) 0%,
         rgba(252, 90, 150, 1) 50px,
         rgba(255, 255, 255, 1) 50px,
         rgba(233, 233, 233, 1) 100%
@@ -84,6 +84,7 @@ export const Description = styled.div`
     padding: 10px;
     background: #fff;
     font-family: 'Work Sans', sans-serif;
+    max-width: 700px;
     pre {
         display: inline-block;
         color: ${colors.primary};

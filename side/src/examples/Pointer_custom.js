@@ -5,13 +5,17 @@ import { Pointer, Arc } from 'rc-knob'
 
 const example = `
 const CustomPointer = ({ width, percentage }) => (
-    <react r={width} fill={\`hsb(\${360 * percentage}, 50%, 50%)\`} />
+    <rect 
+      r={width}
+      fill={\`hsb(\${360 * percentage}, 50%, 50%)\`} 
+    />
 <Knob 
   size={100}  
   angleOffset={220} 
   angleRange={280}
   min={0}
   max={100}
+  onChange={value => console.log(value)}
 >
   <Pointer 
     width={3} 

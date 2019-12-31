@@ -11,6 +11,7 @@ const example = `
   steps={40}
   min={0}
   max={40}
+  onChange={value => console.log(value)}
 >
   <Scale 
     tickWidth={2}

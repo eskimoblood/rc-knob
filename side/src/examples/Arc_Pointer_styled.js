@@ -1,6 +1,5 @@
 import React from 'react'
 import Example from '../Example'
-import colors from '../colors'
 import { Arc, Pointer } from 'rc-knob'
 
 const example = `
@@ -10,6 +9,8 @@ const example = `
   angleRange={280}
   min={0}
   max={100}
+  className="styledKnob"
+  onChange={value => console.log(value)}
 >
   <Arc 
     arcWidth={1.5}
