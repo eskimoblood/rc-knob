@@ -4,9 +4,6 @@ on:
   push:
     branches:
     - master
-    - path: 
-      - side/src/**/*.js
-      - side/package.json
 
 jobs:
   build-deploy:
