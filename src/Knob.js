@@ -20,7 +20,7 @@ export const Knob = ({
     angleOffset = 0,
     angleRange = 360,
     size,
-    onChange,
+    onChange = () => {},
     children,
     steps,
     snap = false,
