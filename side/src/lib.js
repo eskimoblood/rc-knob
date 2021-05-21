@@ -334,7 +334,7 @@ var useUpdate = (function (_ref3) {
     max: max,
     angleOffset: angleOffset,
     angleRange: angleRange,
-    percentage: initialValue ? (max - min) / initialValue : 0,
+    percentage: initialValue ? (initialValue - min) / (max - min) : 0,
     value: initialValue || 0,
     svg: svg,
     container: container,
